@@ -48,13 +48,13 @@ close_event_draw_options = {
     'color': 'red',
     'marker': 'v',
     'markersize': 10,
-    'label': 'Close door',
+    'label': 'tail enters',
 }
 open_event_draw_options = {
     'color': 'limegreen',
     'marker': '^',
     'markersize': 10,
-    'label': 'Open door',
+    'label': 'head gets out',
 }
 left_close_event = geom.STVector(t_transition, garage.left_pos(t_transition),
     draw_options=close_event_draw_options)
@@ -76,35 +76,35 @@ legend = True
 p = vis.compare_frames(scene, v, tlim=tlim, xlim=xlim, legend=legend,
     title='The ladder paradox')
 p[0].save('8-ladderparadox.png')
-p[0].show()
+#p[0].show()
 
 # Animate the lab frame
 fps = 50
 current_time_color = 'cyan'
-lab_fname = '8-ladderparadox_stationary.mp4'
+lab_fname = '8-ladderparadox_stationary.gif'
 anim_lab = vis.stanimate_with_worldline(scene, tlim=tlim, xlim=xlim,
     fps=fps, legend=True, legend_loc='upper left',
     title='The ladder paradox (stationary POV)',
     current_time_color=current_time_color)
 anim_lab.save(lab_fname)
 # Animate the ladder frame
-ladder_fname = '8-ladderparadox_ladder.mp4'
+ladder_fname = '8-ladderparadox_ladder.gif'
 anim_ladder = vis.stanimate_with_worldline(geom.lorentz_transformed(scene, v),
     tlim=tlim, xlim=xlim, fps=fps, legend=True, legend_loc='upper right',
     title='The ladder paradox (ladder POV)',
     current_time_color=current_time_color)
 anim_ladder.save(ladder_fname)
 # Animate the transformation
-lt_fname = '8-ladderparadox_transform.mp4'
+lt_fname = '8-ladderparadox_transform.gif'
 anim_lt = vis.animate_lt_worldline_and_realspace(scene, v,
     tlim=tlim, xlim=xlim, fps=fps, legend=True, title='Transforming frames...',
     current_time_color=current_time_color)
 anim_lt.save(lt_fname)
 # Animate the rewind from the lab frame
-rew_fname = '8-ladderparadox_rewind.mp4'
+rew_fname = '8-ladderparadox_rewind.gif'
 anim_rew = canim.Rewinder(anim_lab, rewind_rate=5)
 anim_rew.save(rew_fname)
 
 # Glue the animations together
 canim.concat_demuxer([lab_fname, rew_fname, lt_fname, ladder_fname],
-    '8-ladderparadox.mp4')
+    '8-ladderparadox.gif')
